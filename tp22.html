@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transformée de Fourier discrète d’un signal numérique &#8212; Traitement du signal 1 &amp;mdash; Correction des TP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/jbvinc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/translations.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Repliement spectral" href="tp31.html" />
+    <link rel="prev" title="Série de Fourier d’un créneau" href="tp21.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Traitement du signal 1 &mdash; Correction des TP</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Séance du 22/10/2020
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp11.html">
+   Représentation de signaux
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp12.html">
+   Produit de convolution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp13.html">
+   Intercorrélation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp14.html">
+   Décomposition dans la base de Haar
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Séance du 13/11/2020
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp21.html">
+   Série de Fourier d’un créneau
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Transformée de Fourier discrète d’un signal numérique
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Séance du 10/12/2020
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp31.html">
+   Repliement spectral
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp32.html">
+   Représentation temps-fréquence
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tp33.html">
+   Interpolation
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/tp22.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/vincmazet/signal1/blob/master/tp22.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectre-non-centre-en-fonction-des-echantillons">
+   Spectre non centré, en fonction des échantillons
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectre-centre-en-fonction-des-echantillons">
+   Spectre centré, en fonction des échantillons
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spectre-centre-en-fonction-de-la-frequence">
+   Spectre centré, en fonction de la fréquence
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#application">
+   Application
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="transformee-de-fourier-discrete-d-un-signal-numerique">
+<h1>Transformée de Fourier discrète d’un signal numérique<a class="headerlink" href="#transformee-de-fourier-discrete-d-un-signal-numerique" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Le signal temporel est une porte :</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/tp22_3_0.png" src="_images/tp22_3_0.png" />
+</div>
+</div>
+<p>Attention ! Le signal contient 100 échantillons (de 0 à 99) et l’échantillon en <span class="math notranslate nohighlight">\(n=50\)</span> est nul !</p>
+<div class="section" id="spectre-non-centre-en-fonction-des-echantillons">
+<h2>Spectre non centré, en fonction des échantillons<a class="headerlink" href="#spectre-non-centre-en-fonction-des-echantillons" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Par simplicité et lisibilité, les spectres sont tracés avec <code class="docutils literal notranslate"><span class="pre">plot</span></code> mais ils restent discrets !</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Z1</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">myplot</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">Z1</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tp22_7_0.png" src="_images/tp22_7_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="spectre-centre-en-fonction-des-echantillons">
+<h2>Spectre centré, en fonction des échantillons<a class="headerlink" href="#spectre-centre-en-fonction-des-echantillons" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k2</span> <span class="o">=</span> <span class="n">k1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">N</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Z2</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">Z1</span><span class="p">)</span>
+<span class="n">myplot</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="n">Z2</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tp22_9_0.png" src="_images/tp22_9_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="spectre-centre-en-fonction-de-la-frequence">
+<h2>Spectre centré, en fonction de la fréquence<a class="headerlink" href="#spectre-centre-en-fonction-de-la-frequence" title="Lien permanent vers ce titre">¶</a></h2>
+<p>On vérifie que les abscisses représentent bien une période du spectre (entre <span class="math notranslate nohighlight">\(-f_e/2\)</span> et <span class="math notranslate nohighlight">\(f_e/2\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">k2</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">Te</span><span class="p">)</span>
+<span class="n">myplot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Z2</span><span class="p">,</span> <span class="s2">&quot;f (Hz)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tp22_11_0.png" src="_images/tp22_11_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="application">
+<h2>Application<a class="headerlink" href="#application" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le signal temporel est :</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/tp22_13_0.png" src="_images/tp22_13_0.png" />
+</div>
+</div>
+<p>Son spectre est :</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/tp22_15_0.png" src="_images/tp22_15_0.png" />
+</div>
+</div>
+<p>La fonction <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot.xlim</span></code> permet de zoomer sur la partie intéressante :</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/tp22_17_0.png" src="_images/tp22_17_0.png" />
+</div>
+</div>
+<p>La fréquence principale du signal est donc à 0,1 Hz.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="tp21.html" title="previous page">Série de Fourier d’un créneau</a>
+    <a class='right-next' id="next-link" href="tp31.html" title="next page">Repliement spectral</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Vincent Mazet (Université de Strasbourg)<br/>
+        
+            &copy; Copyright 2020.<br/>
+          <div class="extra_footer">
+            Traitement du signal &mdash; Vincent Mazet (Université de Strasbourg), 2020 &mdash; CC BY-NC 4.0.
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>
